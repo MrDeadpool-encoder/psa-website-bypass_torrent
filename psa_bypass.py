@@ -38,14 +38,14 @@ def try2link_scrape(url):
 def psa_bypasser(psa_url):
 	client = cloudscraper.create_scraper(allow_brotli=False)
 	r = client.get(psa_url)
-	soup = BeautifulSoup(r.text, "html.parser").find_all(class_="dropshadowboxes-drop-shadow dropshadowboxes-rounded-corners dropshadowboxes-inside-and-outside-shadow dropshadowboxes-lifted-both dropshadowboxes-effect-default")
-	
+	soup = BeautifulSoup(r.text, "html.parser")
+	tag = soup.find_all("noindex", string=" TORRENT")
+	print(tag)
 	with concurrent.futures.ThreadPoolExecutor() as executor:
-		for link in soup:
+		for link in tag:
 			try:
 				exit_gate = link.a.get("href")
 				executor.submit(try2link_scrape, exit_gate)
 			except: pass
-
  
 psa_bypasser("https://psa.pm/movie/bubble-2022/")
