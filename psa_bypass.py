@@ -40,7 +40,6 @@ def psa_bypasser(psa_url):
 	r = client.get(psa_url)
 	soup = BeautifulSoup(r.text, "html.parser")
 	tag = soup.find_all("noindex", string=" TORRENT")
-	print(tag)
 	with concurrent.futures.ThreadPoolExecutor() as executor:
 		for link in tag:
 			try:
